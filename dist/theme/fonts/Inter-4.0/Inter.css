@@ -1,0 +1,39 @@
+@font-face {
+    font-family: 'Inter';
+    src: url('./Inter-Black.eot');
+    src: url('./Inter-Black.eot?#iefix') format('embedded-opentype'),
+        url('./Inter-Black.woff') format('woff'),
+        url('./Inter-Black.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('./Inter-BlackItalic.eot');
+    src: url('./Inter-BlackItalic.eot?#iefix') format('embedded-opentype'),
+        url('./Inter-BlackItalic.woff') format('woff'),
+        url('./Inter-BlackItalic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('./Inter-Bold.eot');
+    src: url('./Inter-Bold.eot?#iefix') format('embedded-opentype'),
+        url('./Inter-Bold.woff') format('woff'),
+        url('./Inter-Bold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('./Inter-BoldItalic.eot');
+    src: url('./Inter-BoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('./Inter-BoldItalic.woff') format('woff'),
+        url('./Inter-BoldItalic.ttf') format('truetype');
+    font-weight: 600;
+    font-style: italic;
+}
