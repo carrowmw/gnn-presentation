@@ -1,0 +1,2 @@
+# Disable Git LFS and related filters for this published site
+* -filter -diff -merge -text

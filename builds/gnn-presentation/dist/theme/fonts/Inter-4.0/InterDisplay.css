@@ -1,0 +1,39 @@
+@font-face {
+    font-family: 'InterDisplay';
+    src: url('./InterDisplay-Black.eot');
+    src: url('./InterDisplay-Black.eot?#iefix') format('embedded-opentype'),
+        url('./InterDisplay-Black.woff') format('woff'),
+        url('./InterDisplay-Black.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'InterDisplay';
+    src: url('./InterDisplay-BlackItalic.eot');
+    src: url('./InterDisplay-BlackItalic.eot?#iefix') format('embedded-opentype'),
+        url('./InterDisplay-BlackItalic.woff') format('woff'),
+        url('./InterDisplay-BlackItalic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'InterDisplay';
+    src: url('./InterDisplay-Bold.eot');
+    src: url('./InterDisplay-Bold.eot?#iefix') format('embedded-opentype'),
+        url('./InterDisplay-Bold.woff') format('woff'),
+        url('./InterDisplay-Bold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'InterDisplay';
+    src: url('./InterDisplay-BoldItalic.eot');
+    src: url('./InterDisplay-BoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('./InterDisplay-BoldItalic.woff') format('woff'),
+        url('./InterDisplay-BoldItalic.ttf') format('truetype');
+    font-weight: 600;
+    font-style: italic;
+}
