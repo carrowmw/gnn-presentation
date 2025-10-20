@@ -328,6 +328,12 @@ def copy_json_assets(base_dir: Path, staging_dir: Path):
         "docs/**/*.json",
         "data/*.json",
         "data/**/*.json",
+        "js/custom/*.geojson",
+        "js/custom/**/*.geojson",
+        "docs/*.geojson",
+        "docs/**/*.geojson",
+        "data/*.geojson",
+        "data/**/*.geojson",
     ]
     for pattern in patterns:
         for src in base_dir.glob(pattern):
