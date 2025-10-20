@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GNN Embed</title>
+    <link rel="stylesheet" href="../dist/theme/white.css" />
+    <link rel="stylesheet" href="../js/custom/gnn-react/dist/style.css" />
+    <style>
+      /* Bridge Reveal theme vars into the iframe document */
+      :root {
+        --gnn-font: var(
+          --r-main-font,
+          system-ui,
+          -apple-system,
+          Segoe UI,
+          Roboto,
+          sans-serif
+        );
+        --gnn-color: var(--r-main-color, #222);
+      }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        background: transparent;
+        font-family: var(--gnn-font);
+        color: var(--gnn-color);
+      }
+      .embed-wrap,
+      .embed-wrap * {
+        font-family: inherit;
+        color: inherit;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="embed-wrap">
+      <div id="gnn-react-root" style="height: 100%"></div>
+    </div>
+    <script
+      defer
+      id="gnn-bundle"
+      src="../js/custom/gnn-react/dist/gnn-react.js?v=20250908"
+    ></script>
+    <script>
+      (function () {
+        function getApi() {
+          if (window.GNNReact && typeof window.GNNReact.mount === "function")
+            return window.GNNReact;
+          try {
+            // eslint-disable-next-line no-undef
+            if (
+              typeof GNNReact !== "undefined" &&
+              typeof GNNReact.mount === "function"
+            )
+              return GNNReact;
+          } catch {}
+          return null;
+        }
+        function tryMount() {
+          const api = getApi();
+          if (api) {
+            api.mount("#gnn-react-root");
+            return true;
+          }
+          return false;
+        }
+        window.addEventListener("DOMContentLoaded", function () {
+          if (!tryMount()) {
+            let n = 0;
+            const t = setInterval(() => {
+              n += 1;
+              if (tryMount() || n > 30) clearInterval(t);
+            }, 150);
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "name": "sensor-data-anim",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "build:js": "esbuild ./src/index.js --bundle --minify --format=iife --global-name=SensorAnim --outfile=./dist/sensor-data-anim.js --define:process.env.NODE_ENV='\"production\"'",
+    "build": "npm run build:js"
+  },
+  "devDependencies": {
+    "esbuild": "^0.23.0"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "Vanilla JS canvas animation for sensor time series"
+}

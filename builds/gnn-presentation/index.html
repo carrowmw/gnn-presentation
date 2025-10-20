@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <title>Urban Sensor Network Analysis with GNNs</title>
+
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/newcastle.css" />
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+    <link rel="stylesheet" href="js/custom/gnn-react/dist/style.css" />
+    <style>
+      .reveal ul li {
+        margin-bottom: 0.5em;
+      }
+
+      /* Remove margin from the last item to avoid extra space */
+      .reveal ul li:last-child {
+        margin-bottom: 0;
+      }
+
+      /* Diagram slide styling */
+      .diagram-card {
+        max-width: 90%;
+        margin: 0 auto;
+        padding: 16px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.85);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08),
+          inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+        backdrop-filter: blur(6px);
+      }
+      .diagram-frame {
+        display: grid;
+        place-items: center;
+        background: #fafafa;
+        border-radius: 10px;
+        padding: 12px;
+        box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+      }
+      .diagram-frame img,
+      .diagram-frame object,
+      .diagram-frame svg {
+        width: 100%;
+        height: auto;
+        max-height: 70vh;
+      }
+      .diagram-caption {
+        text-align: center;
+        font-size: 0.9rem;
+        color: #666;
+        margin-top: 8px;
+      }
+
+      /* Info card + table styling */
+      .info-card {
+        max-width: 90%;
+        margin: 0 auto;
+        padding: 16px 18px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.85);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08),
+          inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+        backdrop-filter: blur(6px);
+      }
+      .data-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        overflow: hidden;
+        border-radius: 10px;
+        font-size: 0.95rem;
+      }
+      .data-table thead th {
+        text-align: left;
+        background: #f5f5f7;
+        color: #1d1d1f;
+        padding: 10px 12px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      }
+      .data-table tbody td {
+        padding: 10px 12px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        vertical-align: top;
+      }
+      .data-table tbody tr:nth-child(odd) td {
+        background: rgba(0, 0, 0, 0.02);
+      }
+      .table-footnote {
+        margin-top: 10px;
+        font-size: 0.85rem;
+        color: #666;
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="reveal" style="background: transparent">
+      <div class="slides">
+        <!-- Slide 1: Title -->
+        <section>
+          <h1>Nowcasting Urban Spatio-Temporal Dynamics</h1>
+          <p style="margin-top: 1rem; color: #ddd">Carrow Morris-Wiltshire</p>
+        </section>
+
+        <!-- Slide 3: Technical Challenges -->
+        <section>
+          <h2>Technical Challenges</h2>
+          <ul style="max-width: 70%; margin: auto; text-align: left">
+            <li class="fragment">
+              <strong>Resilience</strong> - ensuring reliable performance in
+              dynamic environments (sensor failures, network issues)
+            </li>
+            <li class="fragment">
+              <strong>Trust</strong> - explainable predictions and probabilistic
+              forecasting (uncertainty quantification)
+            </li>
+            <li class="fragment">
+              <strong>Scalability</strong> - handling large-scale urban sensor
+              networks
+            </li>
+          </ul>
+        </section>
+
+        <!-- Slide 4: Sensor Data Animation -->
+        <section>
+          <h2>Sensor Activity Over Time</h2>
+          <div id="sensor-anim-inline" style="height: 70vh"></div>
+        </section>
+
+        <!-- Slide 2: Brief explanation -->
+        <section>
+          <h2>Why Graph Neural Networks?</h2>
+          <ul>
+            <li class="fragment">
+              Urban sensors are sparse and irregularly spaced
+            </li>
+            <li class="fragment">
+              Graphs capture spatial relationships between sensors
+            </li>
+            <li class="fragment">
+              GNNs propagate information across edges to fill gaps
+            </li>
+          </ul>
+        </section>
+
+        <!-- Slide 5: React Component for GNN -->
+        <section>
+          <h2>Interactive GNN Visualisation</h2>
+          <div id="gnn-react-inline" style="height: 70vh; width: 100%"></div>
+        </section>
+
+        <!-- Slide 7: Model Data Inputs (Summary) -->
+        <section>
+          <h2>Model Data Inputs (Summary)</h2>
+          <div class="info-card">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Input</th>
+                  <th>Origin</th>
+                  <th>Used As</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Pedestrian/Traffic Counts</td>
+                  <td>City sensors (Lightsail API)</td>
+                  <td>Dynamic channel (targets + lags)</td>
+                </tr>
+                <tr>
+                  <td>Weather (humidity, solar radiation, sunshine)</td>
+                  <td>Urban Observatory API</td>
+                  <td>Exogenous dynamic features</td>
+                </tr>
+                <tr>
+                  <td>Sensor Locations</td>
+                  <td>Sensor registry/manifest</td>
+                  <td>Node positions; network snapping</td>
+                </tr>
+                <tr>
+                  <td>Road Network Topology</td>
+                  <td>OpenStreetMap (OSMnx/Overpass)</td>
+                  <td>Graph edges; distance measures</td>
+                </tr>
+                <tr>
+                  <td>Static Context (centrality, road mix, intersections)</td>
+                  <td>Engineered from OSM network</td>
+                  <td>Static node features</td>
+                </tr>
+                <tr>
+                  <td>
+                    POI Densities (shops, offices, transit, schools, leisure)
+                  </td>
+                  <td>OpenStreetMap (Overpass)</td>
+                  <td>Static node features</td>
+                </tr>
+                <tr>
+                  <td>Temporal Encodings</td>
+                  <td>Engineered from timestamps</td>
+                  <td>Sin/Cos of hour/day/week/month</td>
+                </tr>
+                <tr>
+                  <td>Rolling Aggregates</td>
+                  <td>Engineered from dynamic channels</td>
+                  <td>Mean/Std/Min/Max/Quantiles/Slope</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="table-footnote">
+              Static features come from OSM network/POIs; dynamic channels align
+              to the sensor manifest.
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 6: Data Model Flow Diagram -->
+        <section>
+          <h2>Data Model Flow</h2>
+          <div class="diagram-card">
+            <div class="diagram-frame">
+              <img
+                src="images/diagrams/data_model_flow.svg"
+                alt="Data model flow diagram"
+                loading="lazy"
+              />
+            </div>
+            <div class="diagram-caption">
+              End-to-end pipeline: data ingestion → preprocessing → graph
+              construction → GNN inference → outputs
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="js/custom/gnn-react/dist/gnn-react.js"></script>
+    <script src="js/custom/sensor-data-anim/dist/sensor-data-anim.js"></script>
+    <script>
+      console.debug(
+        "[Index] after sensor script typeof SensorAnim =",
+        typeof window.SensorAnim
+      );
+    </script>
+    <script>
+      // Diagnostics helper for the sensor animation container
+      function logSensorContainerDiagnostics(context, slideEl) {
+        try {
+          var el =
+            slideEl && slideEl.querySelector
+              ? slideEl.querySelector("#sensor-anim-inline")
+              : null;
+          if (!el) {
+            console.debug(
+              "[Slides] " + context + ": sensor container not found in slide"
+            );
+            return;
+          }
+          var rect = el.getBoundingClientRect();
+          console.debug("[Slides] " + context + ": container rect", rect);
+          var cs = window.getComputedStyle(el);
+          console.debug("[Slides] " + context + ": container computed styles", {
+            display: cs.display,
+            position: cs.position,
+            height: cs.height,
+            width: cs.width,
+            overflow: cs.overflow,
+          });
+        } catch (err) {
+          console.warn("[Slides] " + context + ": diagnostics error", err);
+        }
+      }
+
+      // Initialize Reveal
+      Reveal.initialize({
+        controls: true,
+        controlsLayout: "edges",
+        hash: true,
+        progress: true,
+        autoAnimate: true,
+        transition: "slide",
+        transitionSpeed: "default",
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+        width: 1920,
+        height: 1080,
+        margin: 0,
+      });
+
+      Reveal.on("ready", function (e) {
+        console.debug("[Slides] ready: current index", Reveal.getIndices());
+        var curSlide = Reveal.getCurrentSlide();
+        logSensorContainerDiagnostics("ready", curSlide);
+        if (
+          curSlide &&
+          curSlide.querySelector &&
+          curSlide.querySelector("#gnn-react-inline")
+        ) {
+          console.debug("[Slides] mounting GNNReact on ready");
+          // Add delay for GNN React component
+          setTimeout(function () {
+            if (
+              window.GNNReact &&
+              typeof window.GNNReact.mount === "function"
+            ) {
+              window.GNNReact.mount("#gnn-react-inline");
+            }
+          }, 200);
+        }
+        if (
+          curSlide &&
+          curSlide.querySelector &&
+          curSlide.querySelector("#sensor-anim-inline")
+        ) {
+          console.debug(
+            "[Slides] mounting SensorAnim on ready; typeof SensorAnim=",
+            typeof window.SensorAnim
+          );
+          if (
+            window.SensorAnim &&
+            typeof window.SensorAnim.mount === "function"
+          ) {
+            var api = window.SensorAnim.mount("#sensor-anim-inline");
+            console.debug("[Slides] SensorAnim mount result (ready)", api);
+          } else {
+            console.warn(
+              "[Slides] SensorAnim not ready on ready; retrying shortly"
+            );
+            setTimeout(function () {
+              console.debug(
+                "[Slides] retry mount (ready); typeof SensorAnim=",
+                typeof window.SensorAnim
+              );
+              logSensorContainerDiagnostics(
+                "ready-retry",
+                Reveal.getCurrentSlide()
+              );
+              if (
+                window.SensorAnim &&
+                typeof window.SensorAnim.mount === "function"
+              ) {
+                var api2 = window.SensorAnim.mount("#sensor-anim-inline");
+                console.debug(
+                  "[Slides] SensorAnim mount result (ready-retry)",
+                  api2
+                );
+              }
+            }, 150);
+          }
+        }
+      });
+
+      Reveal.on("slidechanged", function (e) {
+        console.debug("[Slides] slidechanged: to", e.indexh, e.indexv);
+        logSensorContainerDiagnostics("slidechanged", e.currentSlide);
+        if (
+          e.currentSlide &&
+          e.currentSlide.querySelector &&
+          e.currentSlide.querySelector("#gnn-react-inline")
+        ) {
+          console.debug("[Slides] mounting GNNReact on slidechanged");
+          // Add delay for GNN React component
+          setTimeout(function () {
+            if (
+              window.GNNReact &&
+              typeof window.GNNReact.mount === "function"
+            ) {
+              window.GNNReact.mount("#gnn-react-inline");
+            }
+          }, 100);
+        }
+        if (
+          e.currentSlide &&
+          e.currentSlide.querySelector &&
+          e.currentSlide.querySelector("#sensor-anim-inline")
+        ) {
+          console.debug(
+            "[Slides] mounting SensorAnim on slidechanged; typeof SensorAnim=",
+            typeof window.SensorAnim
+          );
+          if (
+            window.SensorAnim &&
+            typeof window.SensorAnim.mount === "function"
+          ) {
+            var api3 = window.SensorAnim.mount("#sensor-anim-inline");
+            console.debug(
+              "[Slides] SensorAnim mount result (slidechanged)",
+              api3
+            );
+          } else {
+            console.warn(
+              "[Slides] SensorAnim not ready on slidechanged; retrying shortly"
+            );
+            setTimeout(function () {
+              console.debug(
+                "[Slides] retry mount (slidechanged); typeof SensorAnim=",
+                typeof window.SensorAnim
+              );
+              if (
+                window.SensorAnim &&
+                typeof window.SensorAnim.mount === "function"
+              ) {
+                var api4 = window.SensorAnim.mount("#sensor-anim-inline");
+                console.debug(
+                  "[Slides] SensorAnim mount result (slidechanged-retry)",
+                  api4
+                );
+              }
+            }, 150);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -4,42 +4,41 @@
  * By Hakim El Hattab, http://hakim.se
  */
 
-
 // Default mixins and settings -----------------
 @import "../template/mixins";
 @import "../template/settings";
 // ---------------------------------------------
 
-
 // Include theme-specific fonts
 @import url(./fonts/Inter-4.0/InterDisplay.css);
 
-
 // Override theme settings (see ../template/settings.scss)
-$backgroundColor: #003A65;
+$backgroundColor: #ffffff;
 
-$mainColor: #FFFFFF;
-$headingColor: #FFFFFF;
+$mainColor: #003a65;
+$headingColor: #003a65;
 
 $mainFontSize: 42px;
-$mainFont: 'Derailed', Helvetica, sans-serif;
-$headingFont: 'Derailed', Helvetica, sans-serif;
+$mainFont: "Derailed", Helvetica, sans-serif;
+$headingFont: "Derailed", Helvetica, sans-serif;
 $headingTextShadow: none;
 $headingLetterSpacing: normal;
 $headingTextTransform: uppercase;
 $headingFontWeight: 600;
-$linkColor: #D5112D;
+$linkColor: #d5112d;
 $linkColorHover: lighten($linkColor, 15%);
-$selectionBackgroundColor: rgba($linkColor, 0.75);
+$selectionBackgroundColor: lighten($linkColor, 25%);
 
 $heading1Size: 2.5em;
 $heading2Size: 1.6em;
 $heading3Size: 1.3em;
-$heading4Size: 1.0em;
+$heading4Size: 1em;
 
-// Change text colors against light slide backgrounds
-@include light-bg-text-color(#222);
+$overlayElementBgColor: 0, 0, 0;
+$overlayElementFgColor: 240, 240, 240;
 
+// Change text colors against dark slide backgrounds
+@include dark-bg-text-color(#fff);
 
 // Theme template ------------------------------
 @import "../template/theme";

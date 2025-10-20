@@ -1,0 +1,22 @@
+{
+  "name": "gnn-react",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:css": "tailwindcss -i ./src/style.css -o ./dist/style.css --minify",
+    "build:js": "esbuild ./src/index.jsx --bundle --minify --format=iife --global-name=GNNReact --outfile=./dist/gnn-react.js --jsx=automatic --define:process.env.NODE_ENV='\"production\"'",
+    "build": "npm run build:css && npm run build:js"
+  },
+  "dependencies": {
+    "lucide-react": "^0.468.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.19",
+    "esbuild": "^0.23.0",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.9"
+  }
+}

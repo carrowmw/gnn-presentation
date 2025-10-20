@@ -1,0 +1,321 @@
+/* Tailwind layers */
+/* Intentionally skipping base to avoid global resets that may clash with reveal */
+@tailwind components;
+@tailwind utilities;
+
+/* Keyframes and animation helpers extracted from the component */
+@keyframes pulse-strong {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0px rgba(59, 130, 246, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 12px rgba(59, 130, 246, 0);
+  }
+}
+.animate-pulse-strong circle {
+  animation: pulse-strong 1.5s infinite;
+}
+
+@keyframes pulse-receive {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0px rgba(249, 115, 22, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 12px rgba(249, 115, 22, 0);
+  }
+}
+.animate-pulse-receive circle {
+  animation: pulse-receive 1.5s infinite;
+}
+
+@keyframes pulse-focus-target {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0px rgba(234, 88, 12, 0.8);
+  }
+  50% {
+    box-shadow: 0 0 0 14px rgba(234, 88, 12, 0);
+  }
+}
+.animate-pulse-focus-target circle {
+  animation: pulse-focus-target 1.2s infinite;
+}
+
+@keyframes pulse-edge-focus {
+  0%,
+  100% {
+    stroke-opacity: 1;
+  }
+  50% {
+    stroke-opacity: 0.6;
+  }
+}
+.animate-pulse-edge-focus {
+  animation: pulse-edge-focus 1.2s infinite;
+}
+
+/* Flash bars during aggregation to indicate own-data usage */
+@keyframes bar-flash-using-data {
+  0%,
+  100% {
+    stroke-opacity: 0.95;
+  }
+  50% {
+    stroke-opacity: 0.4;
+  }
+}
+.animate-bar-flash-using-data {
+  animation: bar-flash-using-data 1s infinite;
+  stroke: #f97316; /* orange-500 */
+  stroke-width: 2px;
+  filter: drop-shadow(0 0 4px rgba(249, 115, 22, 0.7));
+}
+
+/* Reset and base styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--r-main-font, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif);
+  color: var(--r-main-color, #222);
+}
+
+/* Make the app inherit the deck typography and colors */
+.gnn-app {
+  font-family: inherit;
+  color: inherit;
+  line-height: 1.4;
+  font-size: 1rem; /* baseline UI size (16px) inside the app */
+}
+
+/* Keep family/color, but let utilities set sizes */
+.gnn-app * {
+  font-family: inherit;
+  color: inherit;
+}
+
+/* Add padding to the app */
+.gnn-app {
+  padding-left: 5rem;
+  padding-right: 5rem;
+}
+
+/* Main container with Apple-inspired styling */
+.gnn-visualization-container {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 12px;
+  font-family: var(--r-main-font, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif);
+  color: var(--r-main-color, #222);
+  background: #fafafa;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+}
+
+/* Controls styling to match sensor animation */
+.gnn-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  background: rgba(255,255,255,0.8);
+  padding: 8px 12px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  font-size: 14px;
+  backdrop-filter: blur(8px);
+}
+
+.gnn-controls button {
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 8px;
+  background: #007AFF;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.gnn-controls button:hover {
+  background: #0056CC;
+  transform: translateY(-1px);
+}
+
+.gnn-controls button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.gnn-controls button.secondary {
+  background: #FF3B30;
+}
+
+.gnn-controls button.secondary:hover {
+  background: #D70015;
+}
+
+/* Main visualization area */
+.gnn-main-content {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 16px;
+  background: rgba(255,255,255,0.6);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);
+  min-height: 400px;
+}
+
+/* Graph canvas area */
+.gnn-graph-container {
+  position: relative;
+  background: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+/* Node details panel */
+.gnn-node-details {
+  background: rgba(255,255,255,0.9);
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border: 1px solid rgba(0,0,0,0.06);
+  backdrop-filter: blur(8px);
+}
+
+.gnn-node-details h3 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1d1d1f;
+}
+
+.gnn-node-details .data-chart {
+  background: #f5f5f7;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 12px 0;
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+.gnn-node-details .data-bar {
+  background: linear-gradient(90deg, #34C759 0%, #FF9500 50%, #FF3B30 100%);
+  height: 20px;
+  border-radius: 6px;
+  margin: 4px 0;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.gnn-node-details .missing-data {
+  background: #8E8E93;
+}
+
+.gnn-node-details button {
+  width: 100%;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 8px;
+  background: #FF9500;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  margin: 12px 0;
+}
+
+.gnn-node-details button:hover {
+  background: #E6820E;
+  transform: translateY(-1px);
+}
+
+.gnn-node-details button:disabled {
+  background: #D1D1D6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Info text styling */
+.gnn-info-text {
+  background: rgba(255,255,255,0.8);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #1d1d1f;
+  border: 1px solid rgba(0,0,0,0.06);
+  backdrop-filter: blur(8px);
+}
+
+/* Status indicators */
+.status-complete {
+  color: #34C759;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-warning {
+  color: #FF9500;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Animation phase indicators */
+.phase-indicator {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: #007AFF;
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  margin-left: 8px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .gnn-main-content {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .gnn-controls {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+  
+  .gnn-controls button {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+}
+
+/* Smooth transitions for all interactive elements */
+.gnn-visualization-container * {
+  transition: all 0.2s ease;
+}
+
+/* Focus styles for accessibility */
+.gnn-controls button:focus,
+.gnn-node-details button:focus {
+  outline: 2px solid #007AFF;
+  outline-offset: 2px;
+}
